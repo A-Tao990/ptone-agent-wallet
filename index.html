@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PTone Agent Wallet</title>
+<style>body{color:#e8e8e8;background:#0f1115;max-width:640px;margin:0 auto;padding:12px;font:15px system-ui,sans-serif}h1{margin:6px 0;font-size:20px}.badge{border-radius:12px;padding:3px 10px;font-size:12px;font-weight:700;display:inline-block}.DEMO{color:#000;background:#d9a400}.MAINNET{color:#fff;background:#c62828}.TESTNET{color:#fff;background:#2b7fff}.card{background:#1a1d24;border-radius:10px;margin:10px 0;padding:12px}button{color:#fff;cursor:pointer;background:#3a4258;border:0;border-radius:6px;margin:2px;padding:8px 12px}button:disabled{opacity:.4}input{box-sizing:border-box;color:#fff;background:#0f1115;border:1px solid #444;border-radius:6px;width:100%;margin:3px 0;padding:7px}.warn{color:#ffb454;font-size:13px}.err{color:#ff6b6b}.ok{color:#6bff95}pre{white-space:pre-wrap;font-size:12px}.row{justify-content:space-between;display:flex}</style>  <script type="module" crossorigin src="./assets/index-Dt-tB7EW.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-Bjp52BOI.js">
+</head><body>
+<h1>PTone Agent Wallet <span id="badge" class="badge DEMO">DEMO — SIMULATED</span></h1>
+<div class="warn">Independent project. Not affiliated with or endorsed by Robinhood or Binance. Prototype. Demo balances are SIMULATED (not real funds). MAINNET mode uses real funds and only after you connect, verify and confirm each transaction in your own wallet.</div>
+<div class="card"><b>1. Mode</b><br>
+<button id="bDemo">Demo (simulated)</button> <button id="bTest">Connect wallet (Robinhood Chain Testnet)</button>
+<label class="warn"><input type="checkbox" id="mnAck" style="width:auto"> I understand MAINNET uses real funds and the contract is NOT audited</label>
+<button id="bMain">Connect MAINNET 4663 (own EIP-1193 wallet)</button> <button id="bOkx">Connect OKX mobile (QR)</button>
+<div id="mnPre" class="warn">Mainnet connects a browser EIP-1193 wallet you control. The Binance AI Wallet is a local-CLI flow, not a browser wallet, and is not connected here.</div>
+<div id="net" class="warn"></div>
+<div id="okxBox" hidden><pre id="okxStatus"></pre><button id="okxAdd" disabled>Add Robinhood 4663 to OKX (you confirm on phone)</button> <button id="okxSwitch" disabled>Switch OKX to 4663</button> <button id="okxDisc">Disconnect OKX</button></div></div>
+<div id="stdCards">
+<div class="card"><b>2. Open Agent account (WIF fee)</b>
+<div class="row"><span>Onboarding fee (WIF)</span><span id="fee">10</span></div>
+<div class="row"><span>Gas (ETH, separate)</span><span>paid by you per tx (estimated in preview, or shown as not estimated)</span></div>
+<div class="warn">Authorizes: the Registry may pull exactly the fee in WIF once. It never holds your principal.</div>
+<button id="bOn">Pay fee &amp; open account</button></div>
+<div class="card"><b>3. Spend scope</b> (token fixed: <span id="sym">mUSD</span>; decimals read from chain in Testnet)
+<input id="per" placeholder="Per-tx cap" value="5"><input id="tot" placeholder="Total cap" value="8">
+<input id="hrs" placeholder="Valid for hours" value="1"><input id="allow" placeholder="Allowed recipient 0x… (comma separated)">
+<button id="bPol">Set scope + approve</button> <button id="bApp">Approve allowance (remaining cap)</button> <button id="bRev">Stop / revoke</button></div>
+<div class="card"><b>4. Instruction</b> <span class="warn">Only: send &lt;amount&gt; &lt;TOKEN&gt; to &lt;0x…&gt;. Swaps unsupported.</span>
+<input id="cmd" placeholder="send 1.5 mUSD to 0x…"><button id="bPrev">Preview</button>
+<pre id="prev"></pre><pre id="pend" class="warn"></pre><button id="bChk" disabled>Check status</button> <button id="bDisc" disabled>Discard (no tx was sent)</button> <button id="bExec" disabled>Confirm &amp; execute</button></div>
+</div>
+<div id="mnCard" class="card" hidden><b>MAINNET (Robinhood Chain 4663)</b>
+<div id="mnNote" class="warn">Mainnet connects a browser EIP-1193 wallet that you control (MetaMask-style). The Binance AI Wallet is a local-CLI flow and is not a browser wallet; it is not connected here, and no remote signing service exists. Every transaction is signed by you, one at a time. No swap, no autonomous execution, no new wallet address is created. Unaudited prototype; start small.</div>
+<pre id="mnStatus"></pre>
+<div><b>A. Open account</b> (only when registered=false; fee 1 WIF)<br><button id="mnOnA" disabled>1. Approve exactly 1 WIF fee</button> <button id="mnOnR" disabled>2. Register (pay fee)</button></div>
+<div><b>B. Policy</b> (recipient = your own account only; max 1 per-tx / 2 total / 24h)
+<input id="mnPer" value="0.1"><input id="mnTot" value="0.2"><input id="mnHrs" value="1"><button id="mnPol" disabled>Set policy (no approve)</button></div>
+<div><b>C. Transfer allowance</b> (independent, finite)<input id="mnAmt" value="0.2"><button id="mnApp" disabled>Approve limited allowance</button></div>
+<div><b>D. Transfer</b> <span class="warn">send &lt;amount&gt; WIF to &lt;0x…&gt;</span><input id="mnCmd" placeholder="send 0.1 WIF to 0x…"><button id="mnPrev" disabled>Preview</button></div>
+<div><b>E. Stop</b> (two steps) <button id="mnRev" disabled>1. Revoke policy</button> <button id="mnZero" disabled>2. Reset allowance to 0</button></div>
+<pre id="mnStaged" class="warn"></pre><button id="mnConfirm" disabled>Confirm</button> <button id="mnCancel" disabled>Cancel</button> <button id="mnChk" disabled>Check status</button> <button id="mnDisc">Discard (no tx was sent)</button>
+<pre id="mnLog"></pre></div>
+<div class="card"><b>Status</b> <span id="balNote" class="warn">Demo balances below are SIMULATED, not real funds.</span><pre id="bal"></pre><pre id="log"></pre></div></body></html>
