@@ -1,5 +1,7 @@
 # PTone Agent Wallet
 
+**[Live demo](https://a-tao990.github.io/ptone-agent-wallet/)** · **[Narrated demo video](https://youtu.be/qIpUldMDLdQ)**
+
 **A WIF-gated, user-confirm agent wallet for Robinhood Chain.** The agent proposes a transfer; *you* sign every transaction in your own wallet; an on-chain registry enforces your caps (per-tx, total, expiry, recipient allow-list). You can revoke at any time.
 
 > **Status: unaudited prototype by one developer.** Small amounts only. Not affiliated with Robinhood, Binance, OKX or the World is Flat team.
