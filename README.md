@@ -26,10 +26,17 @@
 - No audit, no external users, no revenue. The 1 WIF onboarding fee in the tests was paid by the author from one wallet to another of the author's own wallets.
 
 ## How WIF is used
-1. **Onboarding gate** — opening an agent account costs a fixed **1 WIF** (`register()` pulls it with `transferFrom` to `feeSink`).
-2. **Policy token** — the policy (per-tx cap, total cap, expiry, allowed recipients) is expressed in WIF, and transfers go through `Registry.execute()`.
+**Every agent payment moves WIF.** The 1 WIF fee is paid once, to open an account. After that, every successful payment the agent makes is a WIF transfer: `Registry.execute()` calls `WIF.transferFrom(owner, recipient, amount)` inside the caps you set (per-tx cap, total cap, expiry, allowed recipients). Changing limits (`setPolicy`), stopping the agent (`revoke`) and resetting the allowance (`approve(0)`) cost only ETH gas and move no WIF.
 
-Design intent (a hypothesis, **not measured retention or revenue**): the account gate makes WIF a prerequisite for using the agent, and because spending rights expire and are capped, a user who wants the agent to keep working re-opens/re-sets a policy, which means holding and moving WIF again. No claim is made that this works at scale.
+| Operation | WIF moved |
+|---|---|
+| Open account (`register`) | 1 WIF, once |
+| Each agent payment (`execute`) | the payment amount, in WIF |
+| `setPolicy` / `revoke` / `approve(0)` | 0 (ETH gas only) |
+
+You can check this yourself, with no wallet: open the [live page](https://a-tao990.github.io/ptone-agent-wallet/) and press **Verify on mainnet now**. It re-checks the pinned contract and re-reads the 8 real transactions straight from Robinhood Chain, and shows the WIF amount each one moved (from the chain, not from this page). At the time of writing: register = 1 WIF, the self-transfer = 0.1 WIF, the other six = 0.
+
+Design intent (a hypothesis, **not measured retention or revenue**): the account gate makes WIF a prerequisite for using the agent, and because spending rights expire and are capped, a user who keeps using the agent keeps moving WIF through it.
 
 ## Costs (real flow, so far)
 - Gas: ≈ 0.0000352 ETH in total for the 12 mainnet txs of flows A and B (~0.0000314 for A's 8, ~0.0000038 for B's 4).

@@ -3,6 +3,7 @@ import { SimulatedAdapter, type Receipt } from "./adapters";
 import { ChainAdapter } from "./chain";
 import { connectMainnet, initMainnetUI, leaveMainnet } from "./mainnet_ui";
 import { connectOkx, initOkxUI, leaveOkx } from "./okx_ui";
+import { initLive } from "./live_chain";
 import { MemoryKV, PendingStore, allowanceErrors, pendingKey, resolveOrphan, resolvePending } from "./pending";
 
 const $ = (id: string) => document.getElementById(id) as HTMLInputElement & HTMLButtonElement & HTMLElement;
@@ -159,3 +160,4 @@ $("bDisc").onclick = () => guard(async () => {
   store.clearAll(); log("Discarded on user attestation (record/orphans cleared)");
 });
 pendLine(); refresh();
+initLive();

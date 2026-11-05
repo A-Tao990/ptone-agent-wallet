@@ -12,6 +12,14 @@ input{padding:7px;width:100%;box-sizing:border-box;margin:3px 0;border-radius:6p
 </style></head><body>
 <h1>PTone Agent Wallet <span id="badge" class="badge DEMO">DEMO — SIMULATED</span></h1>
 <div class="warn">Independent project. Not affiliated with or endorsed by Robinhood or Binance. Prototype. Demo balances are SIMULATED (not real funds). MAINNET mode uses real funds and only after you connect, verify and confirm each transaction in your own wallet.</div>
+<div class="card" id="heroWif"><b>Every agent payment moves WIF.</b>
+<div class="warn" style="margin:4px 0 8px">Opening an account costs 1 WIF once. After that, each payment the agent makes is a WIF transfer inside your caps (<code>Registry.execute()</code> &rarr; <code>WIF.transferFrom</code>). Changing limits or stopping the agent costs only ETH gas and moves no WIF.</div>
+<div class="row"><span>Open account (register)</span><span>1 WIF, once</span></div>
+<div class="row"><span>Each agent payment (execute)</span><span>the payment amount, in WIF</span></div>
+<div class="row"><span>Set policy / revoke / reset allowance</span><span>0 WIF (ETH gas only)</span></div></div>
+<div class="card" id="liveCard"><b>Verify on mainnet now</b> <span class="warn">no wallet needed &middot; read-only</span>
+<div class="warn" style="margin:4px 0">Re-checks the pinned contract and re-reads the 8 real transactions straight from Robinhood Chain (chain 4663). The WIF amount per transaction comes from the chain, not from this page.</div>
+<button id="bLive">Verify on mainnet now</button><div id="liveOut" style="font-size:12px;margin-top:6px"></div></div>
 <div class="card"><b>1. Mode</b><br>
 <button id="bDemo">Demo (simulated)</button> <button id="bTest">Connect wallet (Robinhood Chain Testnet)</button>
 <label class="warn"><input type="checkbox" id="mnAck" style="width:auto"> I understand MAINNET uses real funds and the contract is NOT audited</label>
