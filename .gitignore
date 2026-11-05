@@ -1,0 +1,12 @@
+node_modules/
+dist/
+artifacts/
+cache/
+typechain-types/
+coverage/
+.env
+.env.*
+!.env.example
+logs/
+*.log
+bytecode-result.json

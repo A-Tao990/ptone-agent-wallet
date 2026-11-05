@@ -1,0 +1,35 @@
+{
+  "name": "ptone-agent-wallet",
+  "version": "0.1.0",
+  "description": "PTone Agent Wallet - WIF-gated, user-confirm agent wallet prototype for Robinhood Chain (unaudited)",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "John Tao",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5179",
+    "build": "vite build",
+    "test:unit": "vitest run",
+    "compile": "hardhat compile",
+    "test:contracts": "hardhat test test/registry.cjs",
+    "test": "npm run test:unit && npm run test:contracts",
+    "typecheck": "tsc --noEmit -p .",
+    "verify:public": "node scripts/verify_public.mjs",
+    "verify:public:nohistory": "node scripts/verify_public.mjs --skip-historical",
+    "pretest:unit": "hardhat compile",
+    "verify:bytecode": "node scripts/strict_bytecode_run.mjs bytecode-result.json",
+    "test:bytecode": "node scripts/strict_bytecode_negative.test.mjs"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.29.1",
+    "typescript": "^7.0.2",
+    "viem": "^2.57.16",
+    "vite": "^8.3.5",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "@okxconnect/ui": "^1.9.1",
+    "@okxconnect/universal-provider": "^1.9.1"
+  }
+}

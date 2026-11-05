@@ -1,0 +1,145 @@
+{
+  "_comment": "PUBLIC on-chain facts only: addresses, tx hashes, fees. Every row can be re-read from any Robinhood Chain RPC / the explorer. No keys, sessions or credentials.",
+  "chainId": 4663,
+  "network": "Robinhood Chain Mainnet",
+  "rpc": "https://rpc.mainnet.chain.robinhood.com",
+  "explorer": "https://robinhoodchain.blockscout.com",
+  "contracts": {
+    "AgentRegistry": "0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D",
+    "WIF": "0x5173b8eA6923c2d40267890D45C46a3480954773",
+    "runtimeCodeHash": "0x1539ae84f0c9440ce6eb8f44f4ecf493d39ca8cb823998aca722b4ea2b25c5cf",
+    "onboardingFeeWIF": "1",
+    "feeSink": "0xFC51A000e7E0B48f271BE023f494E8c46a5f660f"
+  },
+  "wallets": {
+    "A": {
+      "address": "0xFC51A000e7E0B48f271BE023f494E8c46a5f660f",
+      "role": "owner's wallet used through the Binance Agentic Wallet CLI; also the feeSink"
+    },
+    "B": {
+      "address": "0x159a75d1D3ef477C111776c017724Bc7CEfF2B64",
+      "role": "owner's second wallet on the OKX mobile app; opened an account through the web UI"
+    }
+  },
+  "flowA_cli_8tx": [
+    {
+      "step": "01-deploy",
+      "what": "CREATE2 deploy of AgentRegistry via deterministic-deployment-proxy",
+      "hash": "0xf0bd7b8588384c376c4c3f1c9d781c3c26e5ac5810f6df19a429a6913a0a0f56",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xf0bd7b8588384c376c4c3f1c9d781c3c26e5ac5810f6df19a429a6913a0a0f56",
+      "gasUsed": "1044472",
+      "feeWei": "22334989248000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "02-approve",
+      "what": "WIF.approve(Registry, 1 WIF) - onboarding fee allowance",
+      "hash": "0x1d28375bea19ac949dc3a1cdf80afab7f59b9686ebcdf8154cd78502014c773e",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x1d28375bea19ac949dc3a1cdf80afab7f59b9686ebcdf8154cd78502014c773e",
+      "gasUsed": "45949",
+      "feeWei": "984227580000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "03-register",
+      "what": "Registry.register() - pays 1 WIF fee to feeSink",
+      "hash": "0x93ed4999a357f6990a11b9dabaa61c9edd07601ee9c84112f76b7946a12d28c4",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x93ed4999a357f6990a11b9dabaa61c9edd07601ee9c84112f76b7946a12d28c4",
+      "gasUsed": "54396",
+      "feeWei": "1160593056000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "04-policy",
+      "what": "Registry.setPolicy(WIF, 0.1 per-tx, 0.2 total, 1h, recipient = own address)",
+      "hash": "0xa64dc5df44fe331fcc6bc414c16bc64438c2eeec823efcd8835493d1b8c7c58d",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xa64dc5df44fe331fcc6bc414c16bc64438c2eeec823efcd8835493d1b8c7c58d",
+      "gasUsed": "148918",
+      "feeWei": "3168379368000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "05-token-approve",
+      "what": "WIF.approve(Registry, 0.2 WIF) - finite allowance",
+      "hash": "0xf1b6579dbefbeafc81d300e2dec4764d07b3077e5a4599f6322b7dda3dc90102",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xf1b6579dbefbeafc81d300e2dec4764d07b3077e5a4599f6322b7dda3dc90102",
+      "gasUsed": "45949",
+      "feeWei": "977335230000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "06-transfer",
+      "what": "Registry.execute(): 0.1 WIF self-transfer inside the policy",
+      "hash": "0x23325b0a6462129f55b42e1f7116aea8fd4c0033f2b194bd42769946da0ad10c",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x23325b0a6462129f55b42e1f7116aea8fd4c0033f2b194bd42769946da0ad10c",
+      "gasUsed": "78071",
+      "feeWei": "1662131590000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "07-revoke",
+      "what": "Registry.revoke()",
+      "hash": "0xfc3ec458471f85c16937067c032f59b8ec8598091e74015a5ecdce328a4ccbd1",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xfc3ec458471f85c16937067c032f59b8ec8598091e74015a5ecdce328a4ccbd1",
+      "gasUsed": "27466",
+      "feeWei": "591947232000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    },
+    {
+      "step": "08-reset",
+      "what": "WIF.approve(Registry, 0) - allowance cleared",
+      "hash": "0xdd9952c7e7d7f2116a30566fca7160a4cb35d6c6bc0da1c4186773386d5b4236",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xdd9952c7e7d7f2116a30566fca7160a4cb35d6c6bc0da1c4186773386d5b4236",
+      "gasUsed": "23977",
+      "feeWei": "526534920000",
+      "status": "success",
+      "signedBy": "wallet A via Binance Agentic Wallet CLI (user-confirm mode)"
+    }
+  ],
+  "totalFeeWeiA": "31406138224000",
+  "flowB_mobile_4tx": [
+    {
+      "step": "B1-fund-eth",
+      "what": "A -> B: 0.000015 ETH for gas (plain transfer)",
+      "hash": "0x1c1e7c1ce06a4e6aae6aaa43e19dbb6575ed56d1f04125e58211c24c23636283",
+      "block": 106159046,
+      "feeWei": "442890000000",
+      "signedBy": "wallet A via CLI",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x1c1e7c1ce06a4e6aae6aaa43e19dbb6575ed56d1f04125e58211c24c23636283"
+    },
+    {
+      "step": "B2-fund-wif",
+      "what": "A -> B: WIF.transfer(B, 1.2 WIF)",
+      "hash": "0x79a37a0e117cd3820d692ad5abeab533621ac217663c22345a650a0c4fb69038",
+      "feeWei": "1068679384000",
+      "signedBy": "wallet A via CLI",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x79a37a0e117cd3820d692ad5abeab533621ac217663c22345a650a0c4fb69038"
+    },
+    {
+      "step": "B3-approve",
+      "what": "B: WIF.approve(Registry, 1 WIF)",
+      "hash": "0xe8a17ae259436e4ae4c597ad342557b9a593cda1f7f864ac61ec5f5d54772c87",
+      "feeWei": "956566282000",
+      "signedBy": "wallet B on the owner's OKX mobile wallet, confirmed on the phone",
+      "url": "https://robinhoodchain.blockscout.com/tx/0xe8a17ae259436e4ae4c597ad342557b9a593cda1f7f864ac61ec5f5d54772c87"
+    },
+    {
+      "step": "B4-register",
+      "what": "B: Registry.register() - 1 WIF fee to feeSink; emits Registered(B)",
+      "hash": "0x6e53bd1583bf30577cf8951e623bb6f33b3abc76dd74b755f690ada64b1bea46",
+      "block": 106162606,
+      "feeWei": "1290508736000",
+      "signedBy": "wallet B on the owner's OKX mobile wallet, confirmed on the phone",
+      "url": "https://robinhoodchain.blockscout.com/tx/0x6e53bd1583bf30577cf8951e623bb6f33b3abc76dd74b755f690ada64b1bea46"
+    }
+  ],
+  "totalFeeWeiB": "3758644402000",
+  "notDone": "Flow B has NOT run setPolicy / limited approve / self-transfer / revoke / approve(0). Those are the remaining steps of the web UI flow and have no transaction hash."
+}

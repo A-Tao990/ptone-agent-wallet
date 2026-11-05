@@ -1,0 +1,35 @@
+{
+  "_comment": "PUBLIC on-chain facts only (addresses, tx hashes, parameters). No keys, balances, baw cache, requestIds or credentials. Consumed by scripts/verify_public.mjs. Scope: Codex-run mainnet self-transfer test of 2026-11-05 (user-confirm mode); not a public product.",
+  "chainId": 4663,
+  "defaultRpc": "https://rpc.mainnet.chain.robinhood.com",
+  "explorerTx": "https://robinhoodchain.blockscout.com/tx/",
+  "registry": "0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D",
+  "owner": "0xFC51A000e7E0B48f271BE023f494E8c46a5f660f",
+  "wif": "0x5173b8eA6923c2d40267890D45C46a3480954773",
+  "feeSink": "0xFC51A000e7E0B48f271BE023f494E8c46a5f660f",
+  "factory": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+  "salt": "PTone.AgentRegistry.v1",
+  "onboardingFeeRaw": "1000000000000000000",
+  "policy": { "perTxRaw": "100000000000000000", "totalRaw": "200000000000000000", "durationSeconds": 3600, "durationToleranceSeconds": 900, "recipients": ["0xFC51A000e7E0B48f271BE023f494E8c46a5f660f"] },
+  "transferRaw": "100000000000000000",
+  "requestNonce": "0xc56c243bd281d27792d9bcfca771b0114391cabd471cda8f9fe5cfd7a5d86b09",
+  "finalBlock": 106099259,
+  "initcodeHash": "0xad4480cc371664e64b046f3c6bb326373d797b099967ee2b2da382de27cd9d53",
+  "runtime": {
+    "codeHash": "0x1539ae84f0c9440ce6eb8f44f4ecf493d39ca8cb823998aca722b4ea2b25c5cf",
+    "immutableRefs": [{"start":510,"length":32},{"start":672,"length":32},{"start":756,"length":32},{"start":902,"length":32},{"start":936,"length":32},{"start":969,"length":32},{"start":1010,"length":32}],
+    "maskedCodeHash": "0xed6c32c516b8e5de38bfe0fb001d25d1ccc83a8d04bd17fdfd49e4415b52eb1a"
+  },
+  "compiler": { "solc": "0.8.24", "optimizer": true, "runs": 200, "evmVersion": "cancun", "viaIR": false },
+  "expectedTotalFeeWei": "31406138224000",
+  "txs": [
+    { "step": "01-deploy", "hash": "0xf0bd7b8588384c376c4c3f1c9d781c3c26e5ac5810f6df19a429a6913a0a0f56" },
+    { "step": "02-approve", "hash": "0x1d28375bea19ac949dc3a1cdf80afab7f59b9686ebcdf8154cd78502014c773e" },
+    { "step": "03-register", "hash": "0x93ed4999a357f6990a11b9dabaa61c9edd07601ee9c84112f76b7946a12d28c4" },
+    { "step": "04-policy", "hash": "0xa64dc5df44fe331fcc6bc414c16bc64438c2eeec823efcd8835493d1b8c7c58d" },
+    { "step": "05-token-approve", "hash": "0xf1b6579dbefbeafc81d300e2dec4764d07b3077e5a4599f6322b7dda3dc90102" },
+    { "step": "06-transfer", "hash": "0x23325b0a6462129f55b42e1f7116aea8fd4c0033f2b194bd42769946da0ad10c" },
+    { "step": "07-revoke", "hash": "0xfc3ec458471f85c16937067c032f59b8ec8598091e74015a5ecdce328a4ccbd1" },
+    { "step": "08-reset", "hash": "0xdd9952c7e7d7f2116a30566fca7160a4cb35d6c6bc0da1c4186773386d5b4236" }
+  ]
+}

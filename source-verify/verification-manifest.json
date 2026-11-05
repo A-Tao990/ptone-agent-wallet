@@ -1,0 +1,15 @@
+{
+  "_comment": "Inputs for explorer/Sourcify-style source verification. PREPARED ONLY — no verification has been submitted anywhere. Public facts only.",
+  "chainId": 4663,
+  "address": "0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D",
+  "contractName": "AgentRegistry",
+  "sourcePath": "contracts/AgentRegistry.sol",
+  "compilerVersion": "v0.8.24+commit.e11b9ed9",
+  "language": "Solidity",
+  "settings": { "optimizer": true, "runs": 200, "evmVersion": "cancun", "viaIR": false, "metadata": "default (bytecodeHash=ipfs, appended CBOR)" },
+  "standardJsonInput": "AgentRegistry.standard-input.json",
+  "constructorArgsHex": "constructor-args.hex",
+  "constructorArgsDecoded": { "wif_": "0x5173b8eA6923c2d40267890D45C46a3480954773", "fee_": "1000000000000000000", "sink_": "0xFC51A000e7E0B48f271BE023f494E8c46a5f660f" },
+  "deploy": { "via": "CREATE2 deterministic-deployment-proxy 0x4e59b44847b379578588920cA78FbF26c0B4956C", "salt": "keccak256(\"PTone.AgentRegistry.v1\")", "tx": "0xf0bd7b8588384c376c4c3f1c9d781c3c26e5ac5810f6df19a429a6913a0a0f56" },
+  "note": "Contract is created by a factory call (internal creation), so explorers that need a 'creation tx' may require the standard-JSON path rather than auto-detect."
+}
