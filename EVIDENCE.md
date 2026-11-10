@@ -40,6 +40,6 @@ Total gas for the 4: 3,758,644,402,000 wei. After flow B: B holds 0.2 WIF, allow
 ## How an independent party can reproduce
 1. `npm ci && npm run verify:public` — decodes every flow-A tx against the expected ABI/arguments, requires the exact event sequence, and checks the current registry state.
 2. `npm run compile && npm run verify:bytecode` — rebuilds expected runtime bytecode from `contracts/AgentRegistry.sol` (solc 0.8.24, optimizer 200 runs, cancun) with the immutables `wif`, `onboardingFee`, `feeSink` written into the exact `immutableReferences` slots, and requires byte equality with `eth_getCode`.
-3. `source-verify/` holds the standard-JSON input and constructor args for explorer source verification (submission to the explorer was not done at the time of writing).
+3. `source-verify/` holds the standard-JSON input and constructor args for explorer source verification The registry source was verified on Blockscout with exactly these inputs on 2026-11-10 (result: "Contract source code verified (exact match)", compiler v0.8.24+commit.e11b9ed9, optimizer 200 runs, evm cancun): https://robinhoodchain.blockscout.com/address/0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D?tab=contract . Verified source is not an audit; the contract is still unaudited.
 
 Limits of this evidence: it proves the transactions happened and the contract matches this source. It does not prove safety (no audit), usage by others, or retention/revenue.

@@ -1,5 +1,5 @@
 {
-  "_comment": "Inputs for explorer/Sourcify-style source verification. PREPARED ONLY — no verification has been submitted anywhere. Public facts only.",
+  "_comment": "Inputs for explorer/Sourcify-style source verification. Submitted to the Robinhood Chain Blockscout explorer on 2026-11-10 with the standard-JSON input in this folder; result: verified (exact match). Public facts only.",
   "chainId": 4663,
   "address": "0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D",
   "contractName": "AgentRegistry",

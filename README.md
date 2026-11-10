@@ -11,7 +11,7 @@
 
 | Part | Status |
 |---|---|
-| `AgentRegistry` contract on **Robinhood Chain mainnet (chain 4663)** at `0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D`, creating accounts for a **1 WIF** fee | **Real**, deployed and used with real funds |
+| `AgentRegistry` contract on **Robinhood Chain mainnet (chain 4663)** at `0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D`, creating accounts for a **1 WIF** fee | **Real**, deployed and used with real funds. Source code **verified on the Blockscout explorer (exact match)**: [read the contract](https://robinhoodchain.blockscout.com/address/0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D?tab=contract) |
 | Flow A: 8 mainnet transactions (deploy → approve 1 WIF → register → policy → limited approve → 0.1 WIF self-transfer → revoke → approve 0) driven through the Binance Agentic Wallet CLI | **Real**, all receipts `success` ([EVIDENCE.md](EVIDENCE.md)) |
 | Flow B: a second wallet on the **OKX mobile app** connected to the web UI over the official OKX Connect SDK; approve 1 WIF + `register()` signed on the phone | **Real** (2 txs by the phone, plus 2 funding txs from wallet A) |
 | Rest of flow B (policy, limited approve, transfer, revoke, approve 0) in the web UI with the phone | **Not executed yet** — no tx hash exists |
@@ -63,7 +63,7 @@ Some historical-block checks report `INCONCLUSIVE` on non-archive RPCs; that is 
 Fixed chain 4663, registry, WIF and runtime **codehash** are hard-coded and re-read before every signature; the 1 WIF fee is approved exactly (never unlimited); policy recipients are limited to your own address in this version, with caps of 1 WIF per tx / 2 WIF total / ≤24 h; the amount allowance equals the remaining cap; a request nonce is persisted before the wallet is asked to sign and is **never re-signed** while its outcome is unknown (only a read-only chain check can release it). `revoke()` does not clear an ERC-20 allowance, so the UI has a second explicit step `approve(0)`.
 
 ## Layout
-`src/` web app (TypeScript + Vite + viem) · `contracts/AgentRegistry.sol` (deployed source, byte-identical) · `test/` · `scripts/` public verifiers · `config/public-verify-manifest.json` public facts · `source-verify/` standard-JSON inputs for explorer verification · `evidence/mainnet-receipts.json`.
+`src/` web app (TypeScript + Vite + viem) · `contracts/AgentRegistry.sol` (deployed source, byte-identical) · `test/` · `scripts/` public verifiers · `config/public-verify-manifest.json` public facts · `source-verify/` the standard-JSON input the explorer verification was done with · `evidence/mainnet-receipts.json`.
 
 Note: the NatSpec comment on `AgentRegistry` still says "local/testnet only". It is left untouched because any byte change alters the deployed codehash that this repo pins; the contract is deployed on mainnet and unaudited.
 
