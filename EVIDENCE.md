@@ -26,16 +26,22 @@ Explorer: https://robinhoodchain.blockscout.com · RPC: https://rpc.mainnet.chai
 
 Total gas: 31,406,138,224,000 wei = 0.000031406 ETH. Final state read by the verifier: registered = true, policy inactive, spent 0.1 WIF, nonce used, allowance 0.
 
-## Flow B — second wallet on a phone (OKX Connect), 4 transactions
+## Flow B — second wallet on a phone (OKX Connect), 9 transactions (full lifecycle)
 | # | What | Tx hash | Signed by |
 |---|---|---|---|
 | 1 | A → B 0.000015 ETH for gas | [`0x1c1e7c1c…636283`](https://robinhoodchain.blockscout.com/tx/0x1c1e7c1ce06a4e6aae6aaa43e19dbb6575ed56d1f04125e58211c24c23636283) | A (CLI) |
 | 2 | A → B 1.2 WIF | [`0x79a37a0e…b69038`](https://robinhoodchain.blockscout.com/tx/0x79a37a0e117cd3820d692ad5abeab533621ac217663c22345a650a0c4fb69038) | A (CLI) |
 | 3 | B `WIF.approve(registry, 1 WIF)` | [`0xe8a17ae2…772c87`](https://robinhoodchain.blockscout.com/tx/0xe8a17ae259436e4ae4c597ad342557b9a593cda1f7f864ac61ec5f5d54772c87) | B, phone confirmation |
 | 4 | B `register()` → `Registered(B)`, 1 WIF to feeSink | [`0x6e53bd15…1bea46`](https://robinhoodchain.blockscout.com/tx/0x6e53bd1583bf30577cf8951e623bb6f33b3abc76dd74b755f690ada64b1bea46) | B, phone confirmation |
+| 5 | B `setPolicy` 0.1 / 0.2 WIF, 1 h, recipient = self | [`0xf15b164a…946197`](https://robinhoodchain.blockscout.com/tx/0xf15b164aa1f17e45acd7f25aacc260b6e0b8109a0c648ee42f16296049946197) | B, phone confirmation |
+| 6 | B `WIF.approve(registry, 0.2)` | [`0x85ca68d6…7ff494`](https://robinhoodchain.blockscout.com/tx/0x85ca68d63e197769e9e60169ba196f381f63e5fc7082910ee43073f2ff7ff494) | B, phone confirmation |
+| 7 | B `execute()` 0.1 WIF self-transfer (moves 0.1 WIF) | [`0xfbd612fb…abe779`](https://robinhoodchain.blockscout.com/tx/0xfbd612fb41620620903a3333217038f7c9ffdbc5ceb7c50afb036ab90cabe779) | B, phone confirmation |
+| 8 | B `revoke()` | [`0x19b241b7…3474bf`](https://robinhoodchain.blockscout.com/tx/0x19b241b725cb3ffe8e50a6cdf4a7960601af7ec08ce1c6724fb7ae4c153474bf) | B, phone confirmation |
+| 9 | B `WIF.approve(registry, 0)` | [`0x4d2890d9…a30e9a`](https://robinhoodchain.blockscout.com/tx/0x4d2890d9cea1326d660e5ef6d7e6f6584c9d3f0c35d6b675779d88ac48a30e9a) | B, phone confirmation |
 
-Total gas for the 4: 3,758,644,402,000 wei. After flow B: B holds 0.2 WIF, allowance to the registry is 0, B's policy is inactive, A is untouched by B's actions.
-**Not done:** B's setPolicy → limited approve → self-transfer → revoke → approve(0). No hash exists for them and nothing here claims they ran.
+Rows 5–9 were signed on the phone on 2026-11-10 through the public web UI ([live page](https://a-tao990.github.io/ptone-agent-wallet/), MAINNET mode over OKX Connect), one confirmation per transaction. Receipts re-read from the RPC: all `status = 1`; only row 7 moved WIF (0.1, B → B through `Registry.execute`); machine-readable copy in [`evidence/flow-b-receipts.json`](evidence/flow-b-receipts.json).
+
+Total gas: 3,758,644,402,000 wei for rows 1–4 and 6,522,676,162,000 wei for rows 5–9. After flow B: B holds 0.2 WIF, allowance to the registry is 0, B's policy is inactive (spent 0.1), A is untouched by B's actions. Both wallets belong to the author; this is not an external user.
 
 ## How an independent party can reproduce
 1. `npm ci && npm run verify:public` — decodes every flow-A tx against the expected ABI/arguments, requires the exact event sequence, and checks the current registry state.

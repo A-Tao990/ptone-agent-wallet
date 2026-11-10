@@ -1,0 +1,58 @@
+{
+ "_comment": "Flow B rows 5-9: second wallet, signed on the OKX mobile app through the public web UI on 2026-11-10. Values re-read from eth_getTransactionReceipt. Public facts only.",
+ "chainId": 4663,
+ "account": "0x159a75d1D3ef477C111776c017724Bc7CEfF2B64",
+ "transactions": [
+  {
+   "step": "setPolicy",
+   "hash": "0xf15b164aa1f17e45acd7f25aacc260b6e0b8109a0c648ee42f16296049946197",
+   "status": "success",
+   "block": 110849633,
+   "accountNonce": 2,
+   "wifMoved": "0.0",
+   "feeWei": "3000257532000"
+  },
+  {
+   "step": "approve 0.2",
+   "hash": "0x85ca68d63e197769e9e60169ba196f381f63e5fc7082910ee43073f2ff7ff494",
+   "status": "success",
+   "block": 110850130,
+   "accountNonce": 3,
+   "wifMoved": "0.0",
+   "feeWei": "924401982000"
+  },
+  {
+   "step": "execute 0.1",
+   "hash": "0xfbd612fb41620620903a3333217038f7c9ffdbc5ceb7c50afb036ab90cabe779",
+   "status": "success",
+   "block": 110850675,
+   "accountNonce": 4,
+   "wifMoved": "0.1",
+   "feeWei": "1566117130000"
+  },
+  {
+   "step": "revoke",
+   "hash": "0x19b241b725cb3ffe8e50a6cdf4a7960601af7ec08ce1c6724fb7ae4c153474bf",
+   "status": "success",
+   "block": 110851197,
+   "accountNonce": 5,
+   "wifMoved": "0.0",
+   "feeWei": "551352484000"
+  },
+  {
+   "step": "approve 0",
+   "hash": "0x4d2890d9cea1326d660e5ef6d7e6f6584c9d3f0c35d6b675779d88ac48a30e9a",
+   "status": "success",
+   "block": 110851665,
+   "accountNonce": 6,
+   "wifMoved": "0.0",
+   "feeWei": "480547034000"
+  }
+ ],
+ "finalState": {
+  "wifBalance": "0.2",
+  "allowanceToRegistry": "0",
+  "policyActive": false,
+  "policySpent": "0.1"
+ }
+}

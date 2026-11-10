@@ -38,8 +38,8 @@ Registry `0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D`, WIF `0x5173b8eA6923c2d402
 
 ## Honest scope
 - User-confirm mode only. No continuously running autonomous AI, no session key/4337/7702, no new independent wallet address, no custody, no swaps.
-- The remaining steps of flow B (policy, limited approve, transfer, revoke, approve 0) have not been executed.
-- Contract is **unaudited**. Costs so far: ≈0.0000352 ETH gas for 12 txs; 1 WIF fee per account paid to the author's own wallet; about 1.5 USDT bridged (owner-stated).
+- Flow B is now complete: the second wallet ran policy, limited approve, a 0.1 WIF self-transfer, revoke and approve 0 from the public web UI, each confirmed on the phone (2026-11-10). Both wallets are the author's; there are still no external users.
+- Contract is **unaudited**. Costs so far: ≈0.0000417 ETH gas for 17 txs; 1 WIF fee per account paid to the author's own wallet; about 1.5 USDT bridged (owner-stated).
 - No private-repo or commercial customers exist; none are claimed.
 - The browser DEMO is simulated and labelled so; mainnet receipts are shown only from real hashes above.
 

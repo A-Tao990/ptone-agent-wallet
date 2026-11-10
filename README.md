@@ -13,8 +13,7 @@
 |---|---|
 | `AgentRegistry` contract on **Robinhood Chain mainnet (chain 4663)** at `0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D`, creating accounts for a **1 WIF** fee | **Real**, deployed and used with real funds. Source code **verified on the Blockscout explorer (exact match)**: [read the contract](https://robinhoodchain.blockscout.com/address/0x92ad0E8D7d48334b9f9535dd9109C8A37271f45D?tab=contract) |
 | Flow A: 8 mainnet transactions (deploy → approve 1 WIF → register → policy → limited approve → 0.1 WIF self-transfer → revoke → approve 0) driven through the Binance Agentic Wallet CLI | **Real**, all receipts `success` ([EVIDENCE.md](EVIDENCE.md)) |
-| Flow B: a second wallet on the **OKX mobile app** connected to the web UI over the official OKX Connect SDK; approve 1 WIF + `register()` signed on the phone | **Real** (2 txs by the phone, plus 2 funding txs from wallet A) |
-| Rest of flow B (policy, limited approve, transfer, revoke, approve 0) in the web UI with the phone | **Not executed yet** — no tx hash exists |
+| Flow B: a second wallet on the **OKX mobile app** connected to the public web UI over the official OKX Connect SDK, full lifecycle signed on the phone: approve 1 WIF → `register()` → policy → limited approve → 0.1 WIF self-transfer → revoke → approve 0 | **Real**, 7 txs confirmed on the phone (plus 2 funding txs from wallet A), all receipts `success` ([EVIDENCE.md](EVIDENCE.md)) |
 | Browser **DEMO** mode (default; what a public page runs) | **Simulated**. In-memory balances, receipts start with `demo-`, a permanent `DEMO — SIMULATED` badge. No chain, no wallet |
 | MAINNET mode in the browser | Real funds. Only after ticking a risk box, connecting a wallet you control, and passing the pinned-contract checks. Each tx is confirmed by you in your wallet |
 
@@ -39,7 +38,7 @@ You can check this yourself, with no wallet: open the [live page](https://a-tao9
 Design intent (a hypothesis, **not measured retention or revenue**): the account gate makes WIF a prerequisite for using the agent, and because spending rights expire and are capped, a user who keeps using the agent keeps moving WIF through it.
 
 ## Costs (real flow, so far)
-- Gas: ≈ 0.0000352 ETH in total for the 12 mainnet txs of flows A and B (~0.0000314 for A's 8, ~0.0000038 for B's 4).
+- Gas: ≈ 0.0000417 ETH in total for the 17 mainnet txs of flows A and B (~0.0000314 for A's 8, ~0.0000103 for B's 9).
 - Principal: the 1 WIF fee goes to `feeSink`, which in this deployment is the author's own wallet A; 0.1 WIF was self-transferred. The author also bridged a budget of about 1.5 USDT to obtain gas ETH and WIF (owner-stated, not part of the hashes here).
 
 ## Quick start (no wallet, no key, no gas)
