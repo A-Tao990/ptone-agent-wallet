@@ -8,8 +8,17 @@ import { MemoryKV, PendingStore, allowanceErrors, pendingKey, resolveOrphan, res
 
 const $ = (id: string) => document.getElementById(id) as HTMLInputElement & HTMLButtonElement & HTMLElement;
 const env = import.meta.env as Record<string, string>;
-let FEE = parseAmount("10"), feeDec = 18, dec = 18; // dec = spend-token decimals: 18 in DEMO, read from chain decimals() in TESTNET
-const SYMBOL = "mUSD";
+let FEE = parseAmount("1"), feeDec = 18, dec = 18; // dec = spend-token decimals: 18 in DEMO, read from chain decimals() in TESTNET
+const TEST_SYMBOL = "mUSD"; // Testnet-only mock token
+let SYMBOL = "WIF"; // DEMO mirrors mainnet: the spend token is WIF and the fee is 1 WIF
+const DEMO_TO = "0x1111111111111111111111111111111111111111"; // sample recipient, DEMO only (nothing is sent anywhere in DEMO)
+/** DEMO is a click-through: pre-fill a sample recipient and instruction. Leaving DEMO clears them so no sample value reaches a real network. */
+function demoSamples(on: boolean) {
+  const al = $("allow"), cmd = $("cmd"), sample = `send 0.1 WIF to ${DEMO_TO}`;
+  if (on) { if (!al.value) al.value = DEMO_TO; if (!cmd.value) cmd.value = sample; }
+  else { if (al.value === DEMO_TO) al.value = ""; if (cmd.value === sample) cmd.value = ""; }
+}
+function setSymbol(s: string) { SYMBOL = s; $("sym").textContent = s; $("cmd").placeholder = `send 0.1 ${s} to 0x…`; }
 let mode: "DEMO" | "TESTNET" = "DEMO";
 let demo = new SimulatedAdapter();
 let chain: ChainAdapter | null = null;
@@ -28,7 +37,7 @@ function setMode(m: "DEMO" | "TESTNET" | "MAINNET") {
 async function refresh() {
   if (mode === "DEMO") {
     const b = demo.balances(), p = demo.state();
-    $("bal").textContent = `WIF fee balance: ${formatAmount(b.wif)}\nGas ETH (simulated): ${formatAmount(b.gasEth)}\n${SYMBOL} principal: ${formatAmount(b.token, dec)}\n` +
+    $("bal").textContent = `WIF balance (simulated): ${formatAmount(b.wif + b.token)}\nGas ETH (simulated): ${formatAmount(b.gasEth)}\n` +
       (p ? `Scope: per-tx ${formatAmount(p.perTxCap, dec)}, total ${formatAmount(p.totalCap, dec)}, spent ${formatAmount(p.spent, dec)}, active=${p.active}` : "No scope set");
   } else if (chain) {
     const g = await chain.gasEth().catch(() => null);
@@ -77,7 +86,7 @@ $("bOkx").onclick = () => {
   if (!$("mnAck").checked) return log("Tick the MAINNET risk box first (real funds, unaudited contract)");
   void connectOkx({ log, enter: (eth) => { setMode("MAINNET"); $("net").textContent = "OKX mobile: verification and read-only until the pinned contract checks pass."; connectMainnet(eth); } });
 };
-$("bDemo").onclick = () => { setMode("DEMO"); dec = demo.decimals; FEE = parseAmount("10"); feeDec = 18; store = new PendingStore(new MemoryKV(), "demo"); $("net").textContent = "Demo: no chain, no wallet. All receipts are simulated (ids start with demo-)."; refresh(); };
+$("bDemo").onclick = () => { setMode("DEMO"); setSymbol("WIF"); demoSamples(true); dec = demo.decimals; FEE = parseAmount("1"); feeDec = 18; store = new PendingStore(new MemoryKV(), "demo"); $("net").textContent = "Demo: no chain, no wallet. All receipts are simulated (ids start with demo-)."; refresh(); };
 $("bTest").onclick = () => guard(async () => {
   const eth = (window as never as { ethereum?: never }).ethereum as never as { request: (a: { method: string; params?: unknown[] }) => Promise<unknown> } | undefined;
   if (!eth) throw new Error("No injected wallet found");
@@ -89,11 +98,11 @@ $("bTest").onclick = () => guard(async () => {
   const onchainDec = await ChainAdapter.readDecimals(tok as never); // from the token contract, never hard-coded
   if (env.VITE_TOKEN_DECIMALS && Number(env.VITE_TOKEN_DECIMALS) !== onchainDec) throw new Error(`Configured VITE_TOKEN_DECIMALS=${env.VITE_TOKEN_DECIMALS} does not match on-chain decimals()=${onchainDec}`);
   dec = onchainDec; feeDec = await ChainAdapter.readDecimals(wif as never);
-  chain = new ChainAdapter(eth, { registry: reg as never, wif: wif as never, token: tok as never, tokenSymbol: SYMBOL, tokenDecimals: dec }, acct as never);
+  chain = new ChainAdapter(eth, { registry: reg as never, wif: wif as never, token: tok as never, tokenSymbol: TEST_SYMBOL, tokenDecimals: dec }, acct as never);
   FEE = await chain.fee();
   store = new PendingStore(window.localStorage, pendingKey(CHAINS.testnet.id, reg, acct)); // recovers any unresolved request after refresh
   if (store.locked()) { log("RECOVERED an unresolved request from storage; checking chain..."); await settle(); }
-  setMode("TESTNET"); $("net").textContent = `Connected ${acct} | ${SYMBOL} decimals (on-chain): ${dec} | fee: ${formatAmount(FEE, feeDec)} WIF`;
+  setMode("TESTNET"); setSymbol(TEST_SYMBOL); demoSamples(false); $("net").textContent = `Connected ${acct} | ${SYMBOL} decimals (on-chain): ${dec} | fee: ${formatAmount(FEE, feeDec)} WIF`;
 });
 $("bOn").onclick = () => guard(async () => show(mode === "DEMO" ? await demo.onboard(FEE) : await chain!.onboard(FEE)));
 $("bPol").onclick = () => guard(async () => {
@@ -159,5 +168,5 @@ $("bDisc").onclick = () => guard(async () => {
   if (!window.confirm("Discard ONLY if you checked your wallet AND the explorer and NO transaction for this request was sent (or every listed hash is proven not to have executed the transfer). A sent tx would be paid twice by a new Preview. Discard?")) return;
   store.clearAll(); log("Discarded on user attestation (record/orphans cleared)");
 });
-pendLine(); refresh();
+demoSamples(true); pendLine(); refresh();
 initLive();
